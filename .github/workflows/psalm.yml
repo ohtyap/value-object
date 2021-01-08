@@ -1,0 +1,48 @@
+name: "static analysis by psalm"
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  psalm:
+    name: "static analysis by psalm"
+
+    runs-on: ${{ matrix.operating-system }}
+
+    strategy:
+      matrix:
+        php-version:
+          - "8.0"
+        operating-system:
+          - "ubuntu-latest"
+        include:
+          - php-version: "8.0"
+            operating-system: "ubuntu-latest"
+
+    steps:
+      - name: "checkout"
+        uses: "actions/checkout@v2"
+
+      - name: "install PHP"
+        uses: "shivammathur/setup-php@v2"
+        with:
+          coverage: "pcov"
+          php-version: "${{ matrix.php-version }}"
+          ini-values: memory_limit=-1
+          tools: composer:v2, cs2pr
+
+      - name: "cache dependencies"
+        uses: "actions/cache@v2"
+        with:
+          path: |
+            ~/.composer/cache
+            vendor
+          key: "php-${{ matrix.php-version }}-${{ matrix.dependencies }}"
+          restore-keys: "php-${{ matrix.php-version }}-${{ matrix.dependencies }}"
+
+      - name: "install dependencies"
+        run: "composer update --no-interaction --no-progress --no-suggest"
+
+      - name: "psalm"
+        run: "vendor/bin/psalm --output-format=github --shepherd --stats"
