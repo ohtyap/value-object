@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
+    backupGlobals="false"
+    bootstrap="tests/bootstrap.php"
+    beStrictAboutChangesToGlobalState="true"
+    beStrictAboutCoversAnnotation="true"
+    beStrictAboutResourceUsageDuringSmallTests="true"
+    beStrictAboutTestsThatDoNotTestAnything="true"
+    colors="true"
+    columns="max"
+    cacheResultFile=".phpunit.cache/test-results"
+    convertErrorsToExceptions="true"
+    convertNoticesToExceptions="true"
+    convertWarningsToExceptions="true"
+    failOnRisky="false"
+    failOnWarning="false"
+    forceCoversAnnotation="true"
+    processIsolation="false"
+    stopOnError="true"
+    stopOnFailure="true"
+    stopOnIncomplete="true"
+    stopOnRisky="true"
+    stopOnSkipped="true"
+    stopOnWarning="true"
+    stopOnDefect="true">
+    <testsuites>
+        <testsuite name="Rest suite">
+            <directory>./tests/src</directory>
+        </testsuite>
+    </testsuites>
+
+    <coverage cacheDirectory=".phpunit.cache/code-coverage"
+              processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">src</directory>
+        </include>
+    </coverage>
+</phpunit>
