@@ -1,0 +1,46 @@
+{
+    "name": "ohtyap/value-object",
+    "type": "library",
+    "description": "Base library for the usage of value objects",
+    "keywords": ["value objects"],
+    "homepage": "https://github.com/ohtyap/value-object",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Thomas Payer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Ohtyap\\ValueObject\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ohtyap\\Misc\\ValueObject\\": "tests/misc/",
+            "Ohtyap\\Test\\ValueObject\\": "tests/src/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "require": {
+        "php": "^8.0"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^v2.17.3",
+        "infection/infection": "^0.20.2",
+        "php-coveralls/php-coveralls": "^v2.4.3",
+        "phpstan/phpstan": "^0.12.64",
+        "phpstan/phpstan-phpunit": "^0.12.17",
+        "phpstan/phpstan-strict-rules": "^0.12.7",
+        "phpunit/phpunit": "^9.5",
+        "vimeo/psalm": "^4.3.1"
+    },
+    "scripts": {
+        "phpunit": "phpunit",
+        "psalm": "psalm --show-info=true --no-cache --memory-limit=-1",
+        "phpstan": "phpstan analyse --memory-limit=-1",
+        "infection": "infection --initial-tests-php-options=\"-dxdebug.mode=coverage\" --threads=4 --test-framework=phpunit -s"
+    }
+}

@@ -1,0 +1,15 @@
+vendor/
+.php_cs.cache
+/.phpunit.cache
+.phpunit.result.cache
+composer.phar
+composer.lock
+phpunit.xml
+infection.log
+
+# IDEs
+.idea
+.DS_Store
+.project
+.settings
+nbproject
