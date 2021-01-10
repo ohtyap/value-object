@@ -18,18 +18,21 @@ use Ohtyap\ValueObject\Convert\Convert;
 use Ohtyap\ValueObject\Exception\InvalidArgumentException;
 use Ohtyap\ValueObject\TransformableInterface;
 use Ohtyap\ValueObject\ValueObjectInterface;
+use Stringable;
+use function filter_var;
+use function sprintf;
 
 /**
  * @psalm-immutable
  */
-final class Hostname implements ValueObjectInterface, \Stringable, TransformableInterface
+final class Hostname implements ValueObjectInterface, Stringable, TransformableInterface
 {
     private string $hostname;
 
     public function __construct(string $hostname)
     {
-        if (\filter_var($hostname, FILTER_VALIDATE_DOMAIN, FILTER_FLAG_HOSTNAME) === false) {
-            throw new InvalidArgumentException(\sprintf("The given string '%s' is not a valid hostname.", $hostname));
+        if (filter_var($hostname, FILTER_VALIDATE_DOMAIN, FILTER_FLAG_HOSTNAME) === false) {
+            throw new InvalidArgumentException(sprintf("The given string '%s' is not a valid hostname.", $hostname));
         }
         $this->hostname = $hostname;
     }

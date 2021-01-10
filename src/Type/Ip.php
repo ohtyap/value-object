@@ -18,8 +18,9 @@ use Ohtyap\ValueObject\Convert\Convert;
 use Ohtyap\ValueObject\Exception\InvalidArgumentException;
 use Ohtyap\ValueObject\TransformableInterface;
 use Ohtyap\ValueObject\ValueObjectInterface;
+use Stringable;
 
-final class Ip implements ValueObjectInterface, \Stringable, TransformableInterface
+final class Ip implements ValueObjectInterface, Stringable, TransformableInterface
 {
     private string $ip;
     private int $version;

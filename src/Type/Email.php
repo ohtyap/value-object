@@ -18,11 +18,12 @@ use Ohtyap\ValueObject\Convert\Convert;
 use Ohtyap\ValueObject\Exception\InvalidArgumentException;
 use Ohtyap\ValueObject\TransformableInterface;
 use Ohtyap\ValueObject\ValueObjectInterface;
+use Stringable;
 
 /**
  * @psalm-immutable
  */
-final class Email implements ValueObjectInterface, TransformableInterface, \Stringable
+final class Email implements ValueObjectInterface, TransformableInterface, Stringable
 {
     private string $email;
 
