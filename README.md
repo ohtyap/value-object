@@ -38,14 +38,14 @@ Value objects are equal due to the value of their properties. This means the fol
 
 #### `value()`
 
-This method should return the value as a type your application layer can understand. In most cases this are basic types like `int` or `string`, but also more complex types like `array`or `\DateTime` are possible.
+This method should return the value as a type your application layer can understand. In most cases these are basic types like `int` or `string`, but also more complex types like `array`or `\DateTime` are possible.
 
 ### TransformableInterface
 
 To convert a variable to a value object you need to transform the variable via the `TransformableInterface::transform()`.
 
 ```php
-$emailValueObj = Email::transform('example@php.net')
+$emailValueObj = Email::transform('example@php.net');
 ```
 
 
@@ -67,7 +67,7 @@ $transformer->add(Email::class, CustomEmailTransformable::class);
 ## Collection of value objects
 This repository provides also a small collection of value objects which are intended as basic foundation of your own domain value objects. You might be able to reuse some of the provided ones, but most likely you have to write your own value objects based on your business requirements.  Therefor the provided value objects are very lightweight (without further dependencies) and only guarded by php's `\filter_var()`(with all his limitations) and/or regular expressions.
 
-Currently this built-in value objects are available:
+The following built-in value objects are currently available:
 - Email
 - Hostname
 - Ip
