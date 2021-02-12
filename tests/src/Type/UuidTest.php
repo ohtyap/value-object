@@ -42,8 +42,8 @@ class UuidTest extends AbstractScalarTypeTest
         }
 
         $values[] = ['00000000-0000-0000-0000-000000000000', '00000000-0000-0000-0000-000000000000'];
-        $values[] = ['{3ba82ce4-a251-4b68-9380-4f514bdc3a6b}', '3ba82ce4-a251-4b68-9380-4f514bdc3a6b'];
-        $values[] = ['urn:uuid:3ba82ce4-a251-4b68-9380-4f514bdc3a6b', '3ba82ce4-a251-4b68-9380-4f514bdc3a6b'];
+        $values[] = ['3ba82ce4-a251-4b68-9380-4f514bdc3a6b', '{3ba82ce4-a251-4b68-9380-4f514bdc3a6b}'];
+        $values[] = ['3ba82ce4-a251-4b68-9380-4f514bdc3a6b', 'urn:uuid:3ba82ce4-a251-4b68-9380-4f514bdc3a6b'];
 
         return $values;
     }

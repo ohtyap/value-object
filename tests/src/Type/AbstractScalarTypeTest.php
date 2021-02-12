@@ -32,7 +32,7 @@ abstract class AbstractScalarTypeTest extends TestCase
     /**
      * @dataProvider provideValidValues
      */
-    public function testValidValues(int|float|string $value, int|float|string $expected): void
+    public function testValidValues(int|float|string $expected, int|float|string $value): void
     {
         $valueObject = new $this->type($value);
         self::assertSame($expected, $valueObject->value());
@@ -112,12 +112,12 @@ abstract class AbstractScalarTypeTest extends TestCase
             throw new \Exception('Please provide at least 2 values for valid data');
         }
 
-        $data[] = [$validValues[0][0], $validValues[0][0]];
-        $type = new $this->type($validValues[0][0]);
+        $data[] = [$validValues[0][0], $validValues[0][1]];
+        $type = new $this->type($validValues[0][1]);
         $data[] = [$validValues[0][0], $type];
         if ($type instanceof \Stringable && \is_string($validValues[0][0])) {
             $data[] = [$validValues[0][0],
-                new class ($validValues[0][0]) implements \Stringable
+                new class ($validValues[0][1]) implements \Stringable
                 {
                     public function __construct(private string $value)
                     {
