@@ -77,8 +77,8 @@ abstract class AbstractScalarTypeTest extends TestCase
         if (\count($validValues) < 2) {
             throw new \Exception('Please provide at least 2 values for valid data');
         }
-        $data[] = [true, new $this->type($validValues[0][0]), $validValues[0][0]];
-        $data[] = [true, new $this->type($validValues[0][0]), new $this->type($validValues[0][0])];
+        $data[] = [true, new $this->type($validValues[0][0]), $validValues[0][1]];
+        $data[] = [true, new $this->type($validValues[0][0]), new $this->type($validValues[0][1])];
         $data[] = [false, new $this->type($validValues[0][0]), $validValues[1][0]];
         $data[] = [false, new $this->type($validValues[0][0]), new $this->type($validValues[1][0])];
         $obj = new \stdClass();
