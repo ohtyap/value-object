@@ -39,7 +39,7 @@
     },
     "scripts": {
         "phpunit": "phpunit",
-        "psalm": "psalm --show-info=true --no-cache --memory-limit=-1",
+        "psalm": "psalm --show-info=true --memory-limit=-1 --stats --output-format=phpstorm --config=psalm.xml  --show-snippet=true --find-unused-code=always",
         "phpstan": "phpstan analyse --memory-limit=-1",
         "infection": "infection --initial-tests-php-options=\"-dxdebug.mode=coverage\" --threads=4 --test-framework=phpunit -s"
     }

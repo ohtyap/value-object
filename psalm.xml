@@ -1,8 +1,6 @@
 <?xml version="1.0"?>
 <psalm
-    totallyTyped="true"
-    errorLevel="8"
-    resolveFromConfigFile="true"
+    errorLevel="1"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
@@ -13,4 +11,18 @@
             <directory name="vendor" />
         </ignoreFiles>
     </projectFiles>
+    <issueHandlers>
+        <UnusedClass>
+            <errorLevel type="suppress">
+                <referencedClass name="Ohtyap\ValueObject\Transformer\Transformer"/>
+                <referencedClass name="Ohtyap\ValueObject\Convert"/>
+                <referencedClass name="Ohtyap\ValueObject\Compare"/>
+            </errorLevel>
+        </UnusedClass>
+        <PossiblyUnusedMethod>
+            <errorLevel type="suppress">
+                <referencedMethod name="Ohtyap\ValueObject\ValueObjectInterface::equals"/>
+            </errorLevel>
+        </PossiblyUnusedMethod>
+    </issueHandlers>
 </psalm>

@@ -15,13 +15,6 @@ namespace Ohtyap\ValueObject\Transformer;
 
 use Ohtyap\ValueObject\Exception\TransformException;
 use Ohtyap\ValueObject\TransformableInterface;
-use Ohtyap\ValueObject\Type\Email;
-use Ohtyap\ValueObject\Type\Hostname;
-use Ohtyap\ValueObject\Type\Ip;
-use Ohtyap\ValueObject\Type\Ipv4;
-use Ohtyap\ValueObject\Type\Ipv6;
-use Ohtyap\ValueObject\Type\Url;
-use Ohtyap\ValueObject\Type\Uuid;
 use Ohtyap\ValueObject\ValueObjectInterface;
 
 final class Transformer implements TransformerInterface
@@ -29,15 +22,7 @@ final class Transformer implements TransformerInterface
     /**
      * @var array<class-string<ValueObjectInterface>, class-string<TransformableInterface>>
      */
-    private array $transformers = [
-        Email::class => Email::class,
-        Hostname::class => Hostname::class,
-        Ip::class => Ip::class,
-        Ipv4::class => Ipv4::class,
-        Ipv6::class => Ipv6::class,
-        Url::class => Url::class,
-        Uuid::class => Uuid::class,
-    ];
+    private array $transformers = [];
 
     /**
      * @param class-string<ValueObjectInterface> $type
@@ -87,11 +72,12 @@ final class Transformer implements TransformerInterface
     /**
      * @param class-string<ValueObjectInterface> $type
      */
-    public function transform(string $type, mixed $value): ValueObjectInterface
+    public function transformValue(string $type, mixed $value): ValueObjectInterface
     {
         if (!$this->has($type)) {
             throw new TransformException(\sprintf("Transform for type '%s' doesn't exist.", $type));
         }
+
         $transformer = $this->transformers[$type];
 
         return $transformer::transform($value);

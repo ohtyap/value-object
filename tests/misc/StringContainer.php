@@ -11,8 +11,21 @@
 
 declare(strict_types=1);
 
-namespace Ohtyap\ValueObject\Exception;
+namespace Ohtyap\Misc\ValueObject;
 
-final class InvalidArgumentException extends \InvalidArgumentException
+use Stringable;
+
+final class StringContainer implements Stringable
 {
+    private string $value;
+
+    public function __construct(string $value)
+    {
+        $this->value = $value;
+    }
+
+    public function __toString(): string
+    {
+        return $this->value;
+    }
 }
