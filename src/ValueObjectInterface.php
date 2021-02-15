@@ -15,6 +15,9 @@ namespace Ohtyap\ValueObject;
 
 interface ValueObjectInterface
 {
+    /**
+     * @psalm-pure
+     */
     public function value(): mixed;
 
     /**

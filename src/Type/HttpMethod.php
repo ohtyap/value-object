@@ -33,11 +33,7 @@ final class HttpMethod implements ValueObjectInterface, Stringable, Transformabl
     {
         $httpMethod = \strtoupper($httpMethod);
         if (!\in_array($httpMethod, self::AVAILABLE_METHODS, true)) {
-            throw new InvalidArgumentException(\sprintf(
-                "The given string '%s' is not a valid http method, only %s is allowed.",
-                $httpMethod,
-                \implode(', ', self::AVAILABLE_METHODS)
-            ));
+            throw new InvalidArgumentException(\sprintf("The given string '%s' is not a valid http method, only %s is allowed.", $httpMethod, \implode(', ', self::AVAILABLE_METHODS)));
         }
 
         $this->httpMethod = $httpMethod;
