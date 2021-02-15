@@ -24,21 +24,23 @@ use PHPUnit\Framework\TestCase;
 class ConvertTest extends TestCase
 {
     /**
-     * @dataProvider provideValidConvertStrings
+     * @dataProvider provideValidConvert
      */
-    public function testValidStringConvert(mixed $convertString, string $checkString): void
+    public function testValidConvert(string $method, mixed $convertString, mixed $checkString): void
     {
-        self::assertSame($checkString, Convert::convertToString($convertString, ValueObjectInterface::class));
+        // @phpstan-ignore-next-line
+        self::assertSame($checkString, Convert::{$method}($convertString, ValueObjectInterface::class));
     }
 
     /**
-     * @return array<array<mixed>>
+     * @return array<array<int, mixed>>
      */
-    public function provideValidConvertStrings(): array
+    public function provideValidConvert(): array
     {
         return [
-            ['a string', 'a string'],
+            ['convertToString', 'a string', 'a string'],
             [
+                'convertToString',
                 new class implements \Stringable
                 {
                     public function __toString(): string
@@ -47,33 +49,96 @@ class ConvertTest extends TestCase
                     }
                 },
                 'another string'
-            ]
+            ],
+            [
+                'convertToString',
+                new class implements ValueObjectInterface
+                {
+                    public function value(): string
+                    {
+                        return 'another string';
+                    }
+
+                    public function equals(mixed $other): bool
+                    {
+                        return false;
+                    }
+                },
+                'another string'
+            ],
+
+            ['convertToInt', 5000, 5000],
+            ['convertToInt', 5000.9, 5000],
+            ['convertToInt', '5000', 5000],
+            [
+                'convertToInt',
+                new class implements ValueObjectInterface
+                {
+
+                    public function value(): int
+                    {
+                        return 5000;
+                    }
+
+                    public function equals(mixed $other): bool
+                    {
+                        return false;
+                    }
+                },
+                5000
+            ],
+            [
+                'convertToInt',
+                new class implements ValueObjectInterface
+                {
+
+                    public function value(): string
+                    {
+                        return '5000';
+                    }
+
+                    public function equals(mixed $other): bool
+                    {
+                        return false;
+                    }
+                },
+                5000
+            ],
         ];
     }
 
     /**
-     * @dataProvider provideInvalidConvertStrings
+     * @dataProvider provideInvalidConvert
      */
-    public function testInvalidStringConvert(mixed $convertString): void
+    public function testInvalidConvert(string $method, mixed $convertString): void
     {
         $this->expectException(TransformException::class);
-        Convert::convertToString($convertString, ValueObjectInterface::class);
+        // @phpstan-ignore-next-line
+        Convert::{$method}($convertString, ValueObjectInterface::class);
     }
 
     /**
-     * @return array<array<mixed>>
+     * @return array<array<int, mixed>>
      */
-    public function provideInvalidConvertStrings(): array
+    public function provideInvalidConvert(): array
     {
         return [
-            [new \DateTime()],
-            [['an', 'array']],
-            [false],
-            [true],
-            [null],
-            [12],
-            [12.5],
-            [\fopen('php://memory', 'r')],
+            ['convertToString', new \DateTime()],
+            ['convertToString', ['an', 'array']],
+            ['convertToString', false],
+            ['convertToString', true],
+            ['convertToString', null],
+            ['convertToString', 12],
+            ['convertToString', 12.5],
+            ['convertToString', \fopen('php://memory', 'rb')],
+
+            ['convertToInt', new \DateTime()],
+            ['convertToInt', ['an', 'array']],
+            ['convertToInt', false],
+            ['convertToInt', true],
+            ['convertToInt', null],
+            ['convertToInt', '1abc'],
+            ['convertToInt', \fopen('php://memory', 'rb')],
         ];
     }
 }
