@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Ohtyap\Test\ValueObject\Compare;
 
 use Ohtyap\ValueObject\Compare\ValueObjectCompare;
+use Ohtyap\ValueObject\ValueObjectInterface;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -24,9 +25,10 @@ class ValueObjectCompareTest extends TestCase
     /**
      * @dataProvider provideCompareData
      */
-    public function testCompare(bool $compare, \Stringable $value1, mixed $value2): void
+    public function testCompare(string $method, bool $compare, mixed $value1, mixed $value2): void
     {
-        self::assertSame($compare, ValueObjectCompare::stringCompare($value1, $value2));
+        // @phpstan-ignore-next-line
+        self::assertSame($compare, ValueObjectCompare::{$method}($value1, $value2));
     }
 
     /**
@@ -36,74 +38,311 @@ class ValueObjectCompareTest extends TestCase
     {
         return [
             [
+                'stringCompare',
                 true,
-                new class implements \Stringable {
-                    function __toString()
+                new class implements ValueObjectInterface {
+                    public function value(): string
                     {
                         return 'test';
+                    }
+
+                    public function equals(mixed $other): bool
+                    {
+                        return false;
                     }
                 },
                 'test',
             ],
             [
+                'stringCompare',
                 true,
-                new class implements \Stringable {
-                    function __toString()
+                new class implements ValueObjectInterface {
+                    public function value(): string
                     {
                         return 'test';
                     }
+
+                    public function equals(mixed $other): bool
+                    {
+                        return false;
+                    }
                 },
                 new class implements \Stringable {
-                    function __toString()
+                    public function __toString(): string
                     {
                         return 'test';
                     }
                 },
             ],
             [
-                false,
-                new class implements \Stringable {
-                    function __toString()
+                'stringCompare',
+                true,
+                new class implements ValueObjectInterface {
+                    public function value(): string
                     {
                         return 'test';
+                    }
+
+                    public function equals(mixed $other): bool
+                    {
+                        return false;
+                    }
+                },
+                new class implements ValueObjectInterface {
+                    public function value(): string
+                    {
+                        return 'test';
+                    }
+                    public function equals(mixed $other): bool
+                    {
+                        return false;
+                    }
+                },
+            ],
+            [
+                'stringCompare',
+                false,
+                new class implements ValueObjectInterface {
+                    public function value(): string
+                    {
+                        return 'test';
+                    }
+
+                    public function equals(mixed $other): bool
+                    {
+                        return false;
                     }
                 },
                 'notsame',
             ],
             [
+                'stringCompare',
                 false,
-                new class implements \Stringable {
-                    function __toString()
+                new class implements ValueObjectInterface {
+                    public function value(): string
                     {
                         return 'test';
                     }
+
+                    public function equals(mixed $other): bool
+                    {
+                        return false;
+                    }
                 },
                 new class implements \Stringable {
-                    function __toString()
+                    public function __toString(): string
                     {
                         return 'notsame';
                     }
                 },
             ],
             [
+                'stringCompare',
                 false,
-                new class implements \Stringable {
-                    function __toString()
+                new class implements ValueObjectInterface {
+                    public function value(): string
                     {
                         return 'test';
+                    }
+
+                    public function equals(mixed $other): bool
+                    {
+                        return false;
+                    }
+                },
+                new class implements ValueObjectInterface {
+                    public function value(): string
+                    {
+                        return 'notsame';
+                    }
+                    public function equals(mixed $other): bool
+                    {
+                        return false;
+                    }
+                },
+            ],
+            [
+                'stringCompare',
+                false,
+                new class implements ValueObjectInterface {
+                    public function value(): string
+                    {
+                        return 'test';
+                    }
+
+                    public function equals(mixed $other): bool
+                    {
+                        return false;
                     }
                 },
                 new \DateTime(),
             ],
             [
+                'stringCompare',
                 false,
-                new class implements \Stringable {
-                    function __toString()
+                new class implements ValueObjectInterface {
+                    public function value(): string
                     {
                         return 'test';
                     }
+
+                    public function equals(mixed $other): bool
+                    {
+                        return false;
+                    }
                 },
                 12,
+            ],
+
+            [
+                'stringCompare',
+                true,
+                new class implements ValueObjectInterface {
+                    public function value(): string
+                    {
+                        return 'test';
+                    }
+
+                    public function equals(mixed $other): bool
+                    {
+                        return false;
+                    }
+                },
+                'test',
+            ],
+            [
+                'stringCompare',
+                false,
+                new class implements ValueObjectInterface {
+                    public function value(): int
+                    {
+                        return 12;
+                    }
+
+                    public function equals(mixed $other): bool
+                    {
+                        return false;
+                    }
+                },
+                'test',
+            ],
+
+
+            [
+                'intCompare',
+                true,
+                new class implements ValueObjectInterface {
+                    public function value(): int
+                    {
+                        return 5000;
+                    }
+
+                    public function equals(mixed $other): bool
+                    {
+                        return false;
+                    }
+                },
+                5000,
+            ],
+            [
+                'intCompare',
+                true,
+                new class implements ValueObjectInterface {
+                    public function value(): int
+                    {
+                        return 5000;
+                    }
+
+                    public function equals(mixed $other): bool
+                    {
+                        return false;
+                    }
+                },
+                5000.9,
+            ],
+            [
+                'intCompare',
+                true,
+                new class implements ValueObjectInterface {
+                    public function value(): int
+                    {
+                        return 5000;
+                    }
+
+                    public function equals(mixed $other): bool
+                    {
+                        return false;
+                    }
+                },
+                new class implements ValueObjectInterface {
+                    public function value(): int
+                    {
+                        return 5000;
+                    }
+
+                    public function equals(mixed $other): bool
+                    {
+                        return false;
+                    }
+                },
+            ],
+            [
+                'intCompare',
+                false,
+                new class implements ValueObjectInterface {
+                    public function value(): int
+                    {
+                        return 5000;
+                    }
+
+                    public function equals(mixed $other): bool
+                    {
+                        return false;
+                    }
+                },
+                5001,
+            ],
+            [
+                'intCompare',
+                false,
+                new class implements ValueObjectInterface {
+                    public function value(): int
+                    {
+                        return 5000;
+                    }
+
+                    public function equals(mixed $other): bool
+                    {
+                        return false;
+                    }
+                },
+                'string',
+            ],
+            [
+                'intCompare',
+                false,
+                new class implements ValueObjectInterface {
+                    public function value(): int
+                    {
+                        return 5000;
+                    }
+
+                    public function equals(mixed $other): bool
+                    {
+                        return false;
+                    }
+                },
+                new class implements ValueObjectInterface {
+                    public function value(): int
+                    {
+                        return 5001;
+                    }
+
+                    public function equals(mixed $other): bool
+                    {
+                        return false;
+                    }
+                },
             ],
         ];
     }
