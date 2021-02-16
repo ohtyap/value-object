@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Ohtyap\ValueObject\Transformer;
 
+use Ohtyap\ValueObject\Exception\InvalidArgumentException;
 use Ohtyap\ValueObject\ValueObjectInterface;
 
 final class Schema implements SchemaInterface
@@ -49,6 +50,10 @@ final class Schema implements SchemaInterface
 
     public function type(string $property): string
     {
+        if (!$this->hasProperty($property)) {
+            throw new InvalidArgumentException(\sprintf("Property '%s' does not exist in schema '%s'.", $property, $this->name));
+        }
+
         return $this->properties[$property];
     }
 

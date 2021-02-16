@@ -35,6 +35,4 @@ interface TransformerInterface
      * @return array<string, ValueObjectInterface>
      */
     public function transformBySchema(string $schemaName, array $values): array;
-
-
 }

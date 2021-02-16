@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Ohtyap\Test\ValueObject\Transformer;
 
 use Ohtyap\Misc\ValueObject\ValueObjectWithTransformer;
+use Ohtyap\ValueObject\Exception\InvalidArgumentException;
 use Ohtyap\ValueObject\Transformer\Schema;
 use PHPUnit\Framework\TestCase;
 
@@ -50,5 +51,12 @@ class SchemaTest extends TestCase
         foreach (\array_keys($properties) as $name) {
             self::assertContains($name, $availableProps);
         }
+    }
+
+    public function testInvalidProperty(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $schema = new Schema('test');
+        $schema->type('doesnotexist');
     }
 }
