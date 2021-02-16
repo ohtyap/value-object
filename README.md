@@ -54,15 +54,26 @@ To avoid the direct usage of the `TransformableInterface`you can use the transfo
 
 ```php
 $transformer = new Transformer();
-$emailValueObj = $transformer->transform(YourEmailValueObject::class, 'example@php.net');
+$emailValueObj = $transformer->transformValue(YourEmailValueObject::class, 'example@php.net');
 ```
 
 Use `add()` to provide value object transformation. It is also possible to register a different transformable for a value object:
 ```php
 $transformer = new Transformer();
-$transformer->add(YourEmailValueObject::class, CustomEmailTransformable::class);
+$transformer->addType(YourEmailValueObject::class, CustomEmailTransformable::class);
 ```
 
+In case a (reusable) way of transforming a set of values (an array) to value objects, it is possible to add a schema:
+```php
+$schema = new Schema('user');
+$schema->addProperty('id', MyUuidValueObject::class);
+$schema->addProperty('email', MyEmailValueObject::class);
+
+$transformer = new Transformer();
+$transformer->addSchema($schema);
+
+$result = $transformer->transform('user', ['id' => 'bd24e386-754d-4a8d-8c82-9d9be47220e9', 'email' => 'example@php.net']);
+```
 
 ## Testing
 
