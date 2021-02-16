@@ -7,5 +7,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - Support for Transformation through TransformableInterface and Transformer
-- Basic email, hostname, ip, ipv4, ipv6, url,uuid ValueObject
+- Added transformation by schemas
 - ValueObjectInterface
