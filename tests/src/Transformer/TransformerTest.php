@@ -18,27 +18,31 @@ use Ohtyap\Misc\ValueObject\ValueObjectWithoutTransformer;
 use Ohtyap\Misc\ValueObject\ValueObjectWithTransformer;
 use Ohtyap\ValueObject\Exception\TransformException;
 use Ohtyap\ValueObject\TransformableInterface;
+use Ohtyap\ValueObject\Transformer\Schema;
 use Ohtyap\ValueObject\Transformer\Transformer;
 use Ohtyap\ValueObject\ValueObjectInterface;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Ohtyap\ValueObject\Transformer\Transformer
+ * @uses \Ohtyap\ValueObject\Transformer\Schema
  */
 class TransformerTest extends TestCase
 {
 
-    public function testTransform(): void
+    public function testTransformValue(): void
     {
         $transformer = new Transformer();
-        $transformer->add(ValueObjectWithTransformer::class);
+        $transformer->addType(ValueObjectWithTransformer::class);
 
         $valueObject = $transformer->transformValue(ValueObjectWithTransformer::class, 'test');
         self::assertSame('test', $valueObject->value());
         self::assertInstanceOf(ValueObjectWithTransformer::class, $valueObject);
     }
 
-    public function testInvalidTransform(): void
+
+
+    public function testInvalidTransformValue(): void
     {
         $this->expectException(TransformException::class);
         $transformer = new Transformer();
@@ -54,7 +58,7 @@ class TransformerTest extends TestCase
     public function testValidAdd(string $type, ?string $transformable = null): void
     {
         $transformer = new Transformer();
-        $transformer->add($type, $transformable);
+        $transformer->addType($type, $transformable);
 
         $valueObject = $transformer->transformValue($type, ['a value']);
         self::assertSame(['a value'], $valueObject->value());
@@ -81,7 +85,7 @@ class TransformerTest extends TestCase
     {
         $this->expectException(TransformException::class);
 
-        (new Transformer())->add($type, $transformable);
+        (new Transformer())->addType($type, $transformable);
     }
 
     /**
@@ -98,5 +102,55 @@ class TransformerTest extends TestCase
             [ValueObjectWithTransformer::class, \DateTime::class],
             [ValueObjectWithoutTransformer::class, \DateTime::class],
         ];
+    }
+
+    public function testHasSchema(): void
+    {
+        $transformer = new Transformer();
+        $transformer->addSchema(new Schema('test1'));
+        $transformer->addSchema(new Schema('test2'));
+
+        self::assertTrue($transformer->hasSchema('test1'));
+        self::assertTrue($transformer->hasSchema('test2'));
+        self::assertFalse($transformer->hasSchema('test3'));
+    }
+
+    public function testTransform(): void
+    {
+        $transformer = new Transformer();
+        $transformer->addType(ValueObjectWithTransformer::class);
+        $transformer->addType(ValueObjectWithoutTransformer::class, Transformable::class);
+
+        $schema = new Schema('test');
+        $schema->addProperty('prop1', ValueObjectWithTransformer::class);
+        $schema->addProperty('prop2', ValueObjectWithTransformer::class);
+        $schema->addProperty('prop3', ValueObjectWithTransformer::class);
+        $schema->addProperty('prop4', ValueObjectWithoutTransformer::class);
+        $transformer->addSchema($schema);
+
+        $originalValues = [
+            'prop1' => 'value1',
+            'not_part1' => 'doesnotmatter',
+            'prop2' => 'value2',
+            'prop4' => 'value4',
+        ];
+        $result = $transformer->transform('test', $originalValues);
+        self::assertCount(3, $result);
+        self::assertArrayHasKey('prop1', $result);
+        self::assertArrayHasKey('prop2', $result);
+        self::assertArrayHasKey('prop4', $result);
+        self::assertInstanceOf(ValueObjectWithTransformer::class, $result['prop1']);
+        self::assertInstanceOf(ValueObjectWithTransformer::class, $result['prop2']);
+        self::assertInstanceOf(ValueObjectWithoutTransformer::class, $result['prop4']);
+        self::assertSame('value1', $result['prop1']->value());
+        self::assertSame('value2', $result['prop2']->value());
+        self::assertSame('value4', $result['prop4']->value());
+    }
+
+    public function testInvalidSchemaTransform(): void
+    {
+        $this->expectException(TransformException::class);
+        $transformer = new Transformer();
+        $transformer->transform('test1', []);
     }
 }

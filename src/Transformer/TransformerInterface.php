@@ -20,7 +20,7 @@ interface TransformerInterface
     /**
      * @param class-string<ValueObjectInterface> $type
      */
-    public function has(string $type): bool;
+    public function hasType(string $type): bool;
 
     /**
      * @param class-string<ValueObjectInterface> $type

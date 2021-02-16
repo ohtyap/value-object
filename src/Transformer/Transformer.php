@@ -25,10 +25,15 @@ final class Transformer implements TransformerInterface
     private array $transformers = [];
 
     /**
+     * @var array<string, SchemaInterface>
+     */
+    private array $schemas = [];
+
+    /**
      * @param class-string<ValueObjectInterface> $type
      * @param class-string<TransformableInterface>|null $transformable
      */
-    public function add(string $type, ?string $transformable = null): void
+    public function addType(string $type, ?string $transformable = null): void
     {
         if (!\class_exists($type)) {
             throw new TransformException(\sprintf("Can't load value object '%s'.", $type));
@@ -61,12 +66,22 @@ final class Transformer implements TransformerInterface
         $this->transformers[$type] = $transformable;
     }
 
+    public function addSchema(SchemaInterface $schema): void
+    {
+        $this->schemas[$schema->name()] = $schema;
+    }
+
     /**
      * @param class-string<ValueObjectInterface> $type
      */
-    public function has(string $type): bool
+    public function hasType(string $type): bool
     {
         return isset($this->transformers[$type]);
+    }
+
+    public function hasSchema(string $schema): bool
+    {
+        return isset($this->schemas[$schema]);
     }
 
     /**
@@ -74,12 +89,32 @@ final class Transformer implements TransformerInterface
      */
     public function transformValue(string $type, mixed $value): ValueObjectInterface
     {
-        if (!$this->has($type)) {
+        if (!$this->hasType($type)) {
             throw new TransformException(\sprintf("Transform for type '%s' doesn't exist.", $type));
         }
 
         $transformer = $this->transformers[$type];
 
         return $transformer::transform($value);
+    }
+
+    public function transform(string $schemaName, array $values): array
+    {
+        if (!$this->hasSchema($schemaName)) {
+            throw new TransformException(\sprintf('Schema with name \'%s\' does not exist.', $schemaName));
+        }
+
+        $schema = $this->schemas[$schemaName];
+
+        $result = [];
+        foreach ($schema->properties() as $property) {
+            if (!\array_key_exists($property, $values)) {
+                continue;
+            }
+
+            $result[$property] = $this->transformValue($schema->type($property), $values[$property]);
+        }
+
+        return $result;
     }
 }
