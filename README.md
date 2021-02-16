@@ -72,7 +72,7 @@ $schema->addProperty('email', MyEmailValueObject::class);
 $transformer = new Transformer();
 $transformer->addSchema($schema);
 
-$result = $transformer->transform('user', ['id' => 'bd24e386-754d-4a8d-8c82-9d9be47220e9', 'email' => 'example@php.net']);
+$result = $transformer->transformBySchema('user', ['id' => 'bd24e386-754d-4a8d-8c82-9d9be47220e9', 'email' => 'example@php.net']);
 ```
 
 ## Testing

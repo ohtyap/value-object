@@ -134,7 +134,7 @@ class TransformerTest extends TestCase
             'prop2' => 'value2',
             'prop4' => 'value4',
         ];
-        $result = $transformer->transform('test', $originalValues);
+        $result = $transformer->transformBySchema('test', $originalValues);
         self::assertCount(3, $result);
         self::assertArrayHasKey('prop1', $result);
         self::assertArrayHasKey('prop2', $result);
@@ -151,6 +151,6 @@ class TransformerTest extends TestCase
     {
         $this->expectException(TransformException::class);
         $transformer = new Transformer();
-        $transformer->transform('test1', []);
+        $transformer->transformBySchema('test1', []);
     }
 }

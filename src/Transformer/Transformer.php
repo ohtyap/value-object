@@ -103,7 +103,7 @@ final class Transformer implements TransformerInterface
      *
      * @return array<string, ValueObjectInterface>
      */
-    public function transform(string $schemaName, array $values): array
+    public function transformBySchema(string $schemaName, array $values): array
     {
         if (!$this->hasSchema($schemaName)) {
             throw new TransformException(\sprintf('Schema with name \'%s\' does not exist.', $schemaName));

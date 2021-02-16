@@ -26,4 +26,15 @@ interface TransformerInterface
      * @param class-string<ValueObjectInterface> $type
      */
     public function transformValue(string $type, mixed $value): ValueObjectInterface;
+
+    public function hasSchema(string $schema): bool;
+
+    /**
+     * @param array<string, mixed> $values
+     *
+     * @return array<string, ValueObjectInterface>
+     */
+    public function transformBySchema(string $schemaName, array $values): array;
+
+
 }
