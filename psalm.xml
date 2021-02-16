@@ -17,6 +17,7 @@
                 <referencedClass name="Ohtyap\ValueObject\Transformer\Transformer"/>
                 <referencedClass name="Ohtyap\ValueObject\Convert"/>
                 <referencedClass name="Ohtyap\ValueObject\Compare"/>
+                <referencedClass name="Ohtyap\ValueObject\Transformer\Schema"/>
             </errorLevel>
         </UnusedClass>
         <PossiblyUnusedMethod>

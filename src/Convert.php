@@ -49,6 +49,10 @@ final class Convert
         }
     }
 
+    /**
+     * @param numeric|numeric-string|ValueObjectInterface $value
+     * @param class-string<ValueObjectInterface> $valueObject
+     */
     public static function toInt(mixed $value, string $valueObject): int
     {
         if ($value instanceof ValueObjectInterface) {
@@ -65,6 +69,10 @@ final class Convert
         throw new TransformException(\sprintf("Type '%s' can't be used to create value object '%s'.", \gettype($value), $valueObject));
     }
 
+    /**
+     * @param numeric|numeric-string|ValueObjectInterface $value
+     * @param class-string<ValueObjectInterface> $valueObject
+     */
     public static function toFloat(mixed $value, string $valueObject): float
     {
         if ($value instanceof ValueObjectInterface) {

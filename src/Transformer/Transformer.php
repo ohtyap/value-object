@@ -98,6 +98,11 @@ final class Transformer implements TransformerInterface
         return $transformer::transform($value);
     }
 
+    /**
+     * @param array<string, mixed> $values
+     *
+     * @return array<string, ValueObjectInterface>
+     */
     public function transform(string $schemaName, array $values): array
     {
         if (!$this->hasSchema($schemaName)) {
