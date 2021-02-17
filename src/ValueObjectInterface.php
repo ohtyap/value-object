@@ -20,8 +20,6 @@ interface ValueObjectInterface
     /**
      * Compare the value object with another value (another value object or a native type) and evaluated it they
      * can be considered as equal.
-     *
-     * @psalm-pure
      */
     public function equals(mixed $other): bool;
 }
