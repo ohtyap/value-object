@@ -48,6 +48,9 @@ final class Schema implements SchemaInterface
         return isset($this->properties[$property]);
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function type(string $property): string
     {
         if (!$this->hasProperty($property)) {

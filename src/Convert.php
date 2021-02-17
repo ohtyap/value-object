@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Ohtyap\ValueObject;
 
 use Ohtyap\ValueObject\Exception\TransformException;
-use Stringable;
 
 /**
  * @psalm-pure
@@ -50,13 +49,15 @@ final class Convert
 
     /**
      * @param class-string<ValueObjectInterface> $valueObject
+     *
+     * @psalm-suppress MixedAssignment Mixed values are allowed by design - in case of an invalid value an exception
+     * is thrown.
+     *
+     * @throws TransformException
      */
     public static function toInt(mixed $value, string $valueObject): int
     {
         if ($value instanceof ValueObjectInterface) {
-            /**
-             * @psalm-suppress MixedAssignment It's covered by is_numeric few lines below.
-             */
             $value = $value->value();
         }
 
@@ -69,13 +70,15 @@ final class Convert
 
     /**
      * @param class-string<ValueObjectInterface> $valueObject
+     *
+     * @psalm-suppress MixedAssignment Mixed values are allowed by design - in case of an invalid value an exception
+     * is thrown.
+     *
+     * @throws TransformException
      */
     public static function toFloat(mixed $value, string $valueObject): float
     {
         if ($value instanceof ValueObjectInterface) {
-            /**
-             * @psalm-suppress MixedAssignment It's covered by is_numeric few lines below.
-             */
             $value = $value->value();
         }
 

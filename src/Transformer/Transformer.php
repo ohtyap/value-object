@@ -32,6 +32,8 @@ final class Transformer implements TransformerInterface
     /**
      * @param class-string<ValueObjectInterface> $type
      * @param class-string<TransformableInterface>|null $transformable
+     *
+     * @throws TransformException
      */
     public function addType(string $type, ?string $transformable = null): void
     {
@@ -86,6 +88,8 @@ final class Transformer implements TransformerInterface
 
     /**
      * @param class-string<ValueObjectInterface> $type
+     *
+     * @throws TransformException
      */
     public function transformValue(string $type, mixed $value): ValueObjectInterface
     {
@@ -102,6 +106,8 @@ final class Transformer implements TransformerInterface
      * @param array<string, mixed> $values
      *
      * @return array<string, ValueObjectInterface>
+     *
+     * @throws TransformException
      */
     public function transformBySchema(string $schemaName, array $values): array
     {

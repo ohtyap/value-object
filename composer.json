@@ -35,11 +35,12 @@
         "phpstan/phpstan-phpunit": "^0.12.17",
         "phpstan/phpstan-strict-rules": "^0.12.7",
         "phpunit/phpunit": "^9.5",
+        "psalm/plugin-phpunit": "^0.15.1",
         "vimeo/psalm": "^4.3.1"
     },
     "scripts": {
         "phpunit": "phpunit",
-        "psalm": "psalm --show-info=true --memory-limit=-1 --stats --output-format=phpstorm --config=psalm.xml  --show-snippet=true --find-unused-code=always",
+        "psalm": "psalm --no-diff --show-info=true --memory-limit=-1 --stats --output-format=phpstorm --config=psalm.xml --show-snippet=true --find-unused-code=always --find-unused-psalm-suppress --find-unused-variables",
         "phpstan": "phpstan analyse --memory-limit=-1",
         "infection": "infection --initial-tests-php-options=\"-dxdebug.mode=coverage\" --threads=4 --test-framework=phpunit -s"
     }
