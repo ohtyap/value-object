@@ -2,7 +2,7 @@
 Base library for the usage of value objects.
 
 [![Type Coverage](https://shepherd.dev/github/ohtyap/value-object/coverage.svg)](https://shepherd.dev/github/ohtyap/value-object)
-[![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fohtyap%2Fvalue-object%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/ohtyap/value-object/main)
+[![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fohtyap%2Fvalue-object%1.x)](https://dashboard.stryker-mutator.io/reports/github.com/ohtyap/value-object/1.x)
 [![Codecov](https://img.shields.io/codecov/c/github/ohtyap/value-object)](https://codecov.io/gh/ohtyap/value-object)
 
 [![PHP from Packagist](https://img.shields.io/packagist/php-v/ohtyap/value-object)](https://packagist.org/packages/ohtyap/value-object)
