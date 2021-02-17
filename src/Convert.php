@@ -31,7 +31,6 @@ final class Convert
     }
 
     /**
-     * @param string|ValueObjectInterface|Stringable $value
      * @param class-string<ValueObjectInterface> $valueObject
      *
      * @throws TransformException
@@ -50,7 +49,6 @@ final class Convert
     }
 
     /**
-     * @param numeric|numeric-string|ValueObjectInterface $value
      * @param class-string<ValueObjectInterface> $valueObject
      */
     public static function toInt(mixed $value, string $valueObject): int
@@ -70,7 +68,6 @@ final class Convert
     }
 
     /**
-     * @param numeric|numeric-string|ValueObjectInterface $value
      * @param class-string<ValueObjectInterface> $valueObject
      */
     public static function toFloat(mixed $value, string $valueObject): float
