@@ -15,5 +15,8 @@ namespace Ohtyap\ValueObject;
 
 interface TransformableInterface
 {
+    /**
+     * @psalm-pure
+     */
     public static function transform(mixed $value): ValueObjectInterface;
 }

@@ -32,6 +32,8 @@ final class Convert
     /**
      * @param class-string<ValueObjectInterface> $valueObject
      *
+     * @psalm-mutation-free
+     *
      * @throws TransformException
      */
     public static function toString(mixed $value, string $valueObject): string
@@ -52,6 +54,7 @@ final class Convert
      *
      * @psalm-suppress MixedAssignment Mixed values are allowed by design - in case of an invalid value an exception
      * is thrown.
+     * @psalm-mutation-free
      *
      * @throws TransformException
      */
@@ -73,6 +76,7 @@ final class Convert
      *
      * @psalm-suppress MixedAssignment Mixed values are allowed by design - in case of an invalid value an exception
      * is thrown.
+     * @psalm-mutation-free
      *
      * @throws TransformException
      */

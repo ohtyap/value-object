@@ -75,12 +75,17 @@ final class Transformer implements TransformerInterface
 
     /**
      * @param class-string<ValueObjectInterface> $type
+     *
+     * @psalm-mutation-free
      */
     public function hasType(string $type): bool
     {
         return isset($this->transformers[$type]);
     }
 
+    /**
+     * @psalm-mutation-free
+     */
     public function hasSchema(string $schema): bool
     {
         return isset($this->schemas[$schema]);
@@ -90,6 +95,8 @@ final class Transformer implements TransformerInterface
      * @param class-string<ValueObjectInterface> $type
      *
      * @throws TransformException
+     *
+     * @psalm-mutation-free
      */
     public function transformValue(string $type, mixed $value): ValueObjectInterface
     {
@@ -108,6 +115,8 @@ final class Transformer implements TransformerInterface
      * @return array<string, ValueObjectInterface>
      *
      * @throws TransformException
+     *
+     * @psalm-mutation-free
      */
     public function transformBySchema(string $schemaName, array $values): array
     {

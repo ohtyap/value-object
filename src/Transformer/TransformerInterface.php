@@ -19,20 +19,29 @@ interface TransformerInterface
 {
     /**
      * @param class-string<ValueObjectInterface> $type
+     *
+     * @psalm-mutation-free
      */
     public function hasType(string $type): bool;
 
     /**
      * @param class-string<ValueObjectInterface> $type
+     *
+     * @psalm-mutation-free
      */
     public function transformValue(string $type, mixed $value): ValueObjectInterface;
 
+    /**
+     * @psalm-mutation-free
+     */
     public function hasSchema(string $schema): bool;
 
     /**
      * @param array<string, mixed> $values
      *
      * @return array<string, ValueObjectInterface>
+     *
+     * @psalm-mutation-free
      */
     public function transformBySchema(string $schemaName, array $values): array;
 }

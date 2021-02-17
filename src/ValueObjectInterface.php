@@ -15,11 +15,16 @@ namespace Ohtyap\ValueObject;
 
 interface ValueObjectInterface
 {
+    /**
+     * @psalm-mutation-free
+     */
     public function value(): mixed;
 
     /**
      * Compare the value object with another value (another value object or a native type) and evaluated it they
      * can be considered as equal.
+     *
+     * @psalm-mutation-free
      */
     public function equals(mixed $other): bool;
 }

@@ -30,6 +30,9 @@ final class Schema implements SchemaInterface
         $this->name = $name;
     }
 
+    /**
+     * @psalm-mutation-free
+     */
     public function name(): string
     {
         return $this->name;
@@ -43,6 +46,9 @@ final class Schema implements SchemaInterface
         $this->properties[$property] = $type;
     }
 
+    /**
+     * @psalm-mutation-free
+     */
     public function hasProperty(string $property): bool
     {
         return isset($this->properties[$property]);
@@ -50,6 +56,8 @@ final class Schema implements SchemaInterface
 
     /**
      * @throws InvalidArgumentException
+     *
+     * @psalm-mutation-free
      */
     public function type(string $property): string
     {
@@ -60,6 +68,9 @@ final class Schema implements SchemaInterface
         return $this->properties[$property];
     }
 
+    /**
+     * @psalm-mutation-free
+     */
     public function properties(): array
     {
         return \array_keys($this->properties);

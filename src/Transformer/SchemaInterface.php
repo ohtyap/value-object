@@ -17,17 +17,27 @@ use Ohtyap\ValueObject\ValueObjectInterface;
 
 interface SchemaInterface
 {
+    /**
+     * @psalm-mutation-free
+     */
     public function name(): string;
 
+    /**
+     * @psalm-mutation-free
+     */
     public function hasProperty(string $property): bool;
 
     /**
      * @return class-string<ValueObjectInterface>
+     *
+     * @psalm-mutation-free
      */
     public function type(string $property): string;
 
     /**
      * @return array<string>
+     *
+     * @psalm-mutation-free
      */
     public function properties(): array;
 }
